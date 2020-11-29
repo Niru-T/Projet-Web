@@ -1,4 +1,4 @@
-package com.api.project.Api.Project;
+package com.api.project.Api.Project.User;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

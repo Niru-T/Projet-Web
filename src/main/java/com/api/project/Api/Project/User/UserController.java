@@ -1,7 +1,5 @@
-package com.api.project.Api.Project.Controller;
+package com.api.project.Api.Project.User;
 
-import com.api.project.Api.Project.User;
-import com.api.project.Api.Project.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,25 +40,20 @@ public class UserController
     public ModelAndView addUser(@RequestParam("user_email") String user_email, User user)
     {
         ModelAndView mv=new ModelAndView("success");
+        ModelAndView echec=new ModelAndView("problem");
         List<User> list=urepo.findByEmail(user_email);
 
         if(list.size()!=0)
         {
-            mv.addObject("message", "Un compte utilise déà cet e-mail !");
-
+            echec.addObject("message", "Un compte utilise déjà cet e-mail !");
+            return echec;
         }
         else
         {
             urepo.save(user);
             mv.addObject("message","Utilisateur enregistré avec succès !");
         }
-
         return mv;
-    }
-    @GetMapping("/dummy")
-    public String dummy()
-    {
-        return "dummy";
     }
 
     @PostMapping("/loginPage")
@@ -72,6 +65,8 @@ public class UserController
 
         if(auser!=null)
         {
+            session.setAttribute("firstname", auser.getUser_fname());
+            session.setAttribute("lastname", auser.getUser_lname());
             return "dummy";
         }
         else
@@ -82,13 +77,13 @@ public class UserController
 
     }
 
-    @GetMapping(value = "/logout")
+    @GetMapping(value = "/dummy")
     public String logout_user(HttpSession session)
     {
-        session.removeAttribute("username");
+        session.removeAttribute("firstname");
+        session.removeAttribute("lastname");
         session.invalidate();
-        return "redirect:/loginPage";
+        return "loginPage";
     }
-
 
 }

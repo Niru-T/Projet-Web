@@ -1,4 +1,4 @@
-package com.api.project.Api.Project;
+package com.api.project.Api.Project.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
