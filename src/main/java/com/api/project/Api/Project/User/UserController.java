@@ -2,8 +2,6 @@ package com.api.project.Api.Project.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +19,7 @@ public class UserController
     @RequestMapping("/")
     public String home()
     {
-        return "home";
+      return "home";
     }
 
     @RequestMapping("/signup")
@@ -36,10 +34,16 @@ public class UserController
         return "loginPage";
     }
 
+    @RequestMapping("/logoutPage")
+    public String getLogoutPage()
+    {
+        return "logoutPage";
+    }
+
     @PostMapping("/signup")
     public ModelAndView addUser(@RequestParam("user_email") String user_email, User user)
     {
-        ModelAndView mv=new ModelAndView("success");
+        ModelAndView success=new ModelAndView("success");
         ModelAndView echec=new ModelAndView("problem");
         List<User> list=urepo.findByEmail(user_email);
 
@@ -51,39 +55,42 @@ public class UserController
         else
         {
             urepo.save(user);
-            mv.addObject("message","Utilisateur enregistré avec succès !");
+            success.addObject("message","Utilisateur enregistré avec succès !");
         }
-        return mv;
+        return success;
     }
 
     @PostMapping("/loginPage")
-    public String login_user(@RequestParam("username") String email, @RequestParam("password") String password,
-                             HttpSession session, ModelMap modelMap)
+    public ModelAndView login_user(@RequestParam("username") String email, @RequestParam("password") String password,
+                             HttpSession session)
     {
-
+        ModelAndView loginSuccess=new ModelAndView("success");
+        ModelAndView loginFailed=new ModelAndView("problem");
         User auser=urepo.findByEmailAndPassword(email, password);
 
         if(auser!=null)
         {
             session.setAttribute("firstname", auser.getUser_fname());
             session.setAttribute("lastname", auser.getUser_lname());
-            return "dummy";
+            session.setAttribute("user_id", auser.getUser_id());
+            loginSuccess.addObject("message","Login success !");
+            return loginSuccess;
         }
         else
         {
-            modelMap.put("error", "Compte Invalide");
-            return "loginPage";
+            loginFailed.addObject("message", " Login failed !");
+            return loginFailed;
         }
-
     }
 
-    @GetMapping(value = "/dummy")
-    public String logout_user(HttpSession session)
-    {
+    @PostMapping(value="/logoutPage")
+    public ModelAndView logout(HttpSession session) {
+        ModelAndView mv=new ModelAndView("home");
         session.removeAttribute("firstname");
         session.removeAttribute("lastname");
         session.invalidate();
-        return "loginPage";
+        return mv;
     }
+
 
 }
