@@ -21,7 +21,6 @@ public class SurveyController {
         List<Survey> listSurvey = srepo.showAllSurvey(user_id);
 
         System.out.println("survey = " + listSurvey.get(0).getLocation_id());
-
         modelAndView.setViewName("dummy");
         return "dummy";
     }
