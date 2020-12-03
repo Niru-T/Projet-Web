@@ -11,7 +11,7 @@ public class Survey {
     private int survey_id;
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_user_id"))
     private int user_id;
-    @JoinColumn(foreignKey = @ForeignKey(name = "FK_user_id"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_location_id"))
     private int location_id;
     private Date date_proposed;
 
