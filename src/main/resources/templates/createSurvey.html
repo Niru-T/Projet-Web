@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Sondage</title>
+</head>
+<body>
+<form class="box" th:action="@{/createSurvey}" method="post">
+        <h1>Create a survey</h1>
+        <p>Propose a date and a location</p>
+        <label for="location_name"><b>Choose a location: </b></label>
+        <select name="location_name" size="1" required>
+            <option>Pierrefitte-Sur-seine
+            <option>Saint-Denis
+            <option>Sarcelles
+            <option>Stains
+            <option>Garges-Les-Gonesse
+        </select>
+        <label for="date_proposed"><b>Choose date</b></label>
+        <input type="date" name="date_proposed" required>
+        <input type="submit" value="Create Survey">
+        <a href="mainPage"><h4>Go to main page</h4></a>
+</form>
+</body>
+<style>
+body{
+margin: 0;
+padding: 0;
+font-family: sans-serif;
+background: rgb(45, 176, 194);
+}
+.box{
+width: 300px;
+padding: 100px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: rgb(24, 28, 28);
+text-align: center;
+border-radius: 15px;
+}
+.box h1{
+color: white;
+text-transform: uppercase;
+font-family: sans-serif;
+font-weight: 600;
+font-size: 35px;
+}
+.box a,b,p{
+margin-top: 5px;
+text-align: center;
+font-size: 14px;
+color: white;
+}
+.box option{
+background: black;
+color: white;
+}
+.box input[type = "date"]:focus, select{
+width: 225px;
+border-color: rgb(6, 192, 6);
+}
+.box input[type = "date"], select{
+border: 0;
+background: none;
+display: block;
+margin: 5px auto;
+text-align: center;
+border: 2px solid #E31E1E;
+padding: 10px 6px;
+width: 175px;
+outline: none;
+color: white;
+border-radius: 20px;
+transition: 0.30s;
+}
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+.box input[type = "submit"]{
+border: 0;
+background: none;
+display: block;
+margin: 30px auto;
+text-align: center;
+border: 2px solid rgb(224, 9, 13);
+padding: 10px 45px;
+outline: none;
+color: white;
+border-radius: 20px;
+transition: 0.30s;
+cursor: pointer;
+}
+</style>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Surveys</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <th>Date proposed</th>
+    <th>Location</th>
+    </thead>
+    <tbody>
+    <tr th:each ="mySurveys : ${mySurvey}">
+        <td th:utext="${mySurveys.date_proposed}">...</td>
+        <td th:utext="${mySurveys.location_name}">...</td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/mainPage">Go back to main page</a>
+</body>
+<style>
+body{
+margin: 0;
+padding: 0;
+font-family: sans-serif;
+background: rgb(45, 176, 194);
+}
+.table {
+margin-bottom: 20px;
+border-collapse:collapse;
+font-family: 'Lato', Calibri, Arial, sans-serif;
+border: none;
+border-radius: 3px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+}
+.table th, .table td {
+box-shadow: inset 0 -1px rgba(0,0,0,0.25),
+inset 0 1px rgba(0,0,0,0.25);
+}
+.table th {
+font-weight: normal;
+-webkit-font-smoothing: antialiased;
+padding: 1em;
+color: rgba(0,0,0,0.45);
+text-shadow: 0 0 1px rgba(0,0,0,0.1);
+font-size: 1.5em;
+}
+.table td {
+color: #f7f7f7;
+padding: 0.7em 1em 0.7em 1.15em;
+text-shadow: 0 0 1px rgba(255,255,255,0.1);
+font-size: 1.4em;
+}
+.table tr {
+-webkit-transition: background 0.3s, box-shadow 0.3s;
+-moz-transition: background 0.3s, box-shadow 0.3s;
+transition: background 0.3s, box-shadow 0.3s;
+}
+</style>
+</html>
