@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Error Message</title>
+</head>
+<body>
+<section class="box">
+    <p th:text="${message}"></p>
+    <a href="/">home</a>
+</section>
+</body>
+<style>
+body{
+margin: 0;
+padding: 0;
+font-family: sans-serif;
+background: rgb(45, 176, 194);
+}
+.box{
+width: 300px;
+padding: 100px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: rgb(24, 28, 28);
+text-align: center;
+border-radius: 15px;
+}
+.box p{
+color: red;
+text-transform: uppercase;
+font-family: sans-serif;
+font-weight: 600;
+}
+.box a{
+margin-top: 5px;
+text-align: center;
+font-size: 16px;
+color: white;
+}
+</style>
+</html>
