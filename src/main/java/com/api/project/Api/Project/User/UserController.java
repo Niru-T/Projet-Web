@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,15 +30,29 @@ public class UserController
     }
 
     @RequestMapping("/loginPage")
-    public String getLoginPage()
+    public ModelAndView getLoginPage(HttpSession session)
     {
-        return "loginPage";
+        if(session.getAttribute("user_id")==null){
+            return new ModelAndView("loginPage");
+        }
+        else{
+            ModelAndView error = new ModelAndView("accesDenied");
+            error.addObject("message","You can't login without log out first");
+            return error;
+        }
     }
 
     @RequestMapping("/logoutPage")
-    public String getLogoutPage()
+    public ModelAndView getLogoutPage(HttpSession session)
     {
-        return "logoutPage";
+        if(session.getAttribute("user_id")!=null){
+            return new ModelAndView("logoutPage");
+        }
+        else{
+            ModelAndView error = new ModelAndView("problem");
+            error.addObject("message","You can't logout if you're not logged in already");
+            return error;
+        }
     }
 
     @PostMapping("/signup")
@@ -64,7 +79,7 @@ public class UserController
     public ModelAndView login_user(@RequestParam("username") String email, @RequestParam("password") String password,
                              HttpSession session)
     {
-        ModelAndView loginSuccess=new ModelAndView("success");
+        ModelAndView mainPage=new ModelAndView("mainPage");
         ModelAndView loginFailed=new ModelAndView("problem");
         User auser=urepo.findByEmailAndPassword(email, password);
 
@@ -73,8 +88,7 @@ public class UserController
             session.setAttribute("firstname", auser.getUser_fname());
             session.setAttribute("lastname", auser.getUser_lname());
             session.setAttribute("user_id", auser.getUser_id());
-            loginSuccess.addObject("message","Login success !");
-            return loginSuccess;
+            return mainPage;
         }
         else
         {
@@ -92,5 +106,20 @@ public class UserController
         return mv;
     }
 
+    @RequestMapping(value = { "/allUser" }, method = RequestMethod.GET)
+    public ModelAndView showSurvey(HttpSession session)
+    {
+        if(session.getAttribute("user_id")=="1"){
+            ModelAndView allSurveyView=new ModelAndView("allUser");
+            List<User> allUser = urepo.getAllUser();
+            allSurveyView.addObject("allUser", allUser);
+            return allSurveyView;
+        }
+        else{
+            ModelAndView error = new ModelAndView("accesDenied");
+            error.addObject("message","You have not the rights to access this page");
+            return error;
+        }
+    }
 
 }

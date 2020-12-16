@@ -1,5 +1,7 @@
 package com.api.project.Api.Project.Survey;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,9 +13,9 @@ public class Survey {
     private int survey_id;
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_user_id"))
     private int user_id;
-    //@JoinColumn(foreignKey = @ForeignKey(name = "FK_location_id"))
-    private int location_id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_proposed;
+    private String location_name;
 
     public Date getDate_proposed() {
         return date_proposed;
@@ -23,12 +25,12 @@ public class Survey {
         this.date_proposed = date_proposed;
     }
 
-    public int getLocation_id() {
-        return location_id;
+    public String getLocation_name() {
+        return location_name;
     }
 
-    public void setLocation_id(int location_id) {
-        this.location_id = location_id;
+    public void setLocation_name(String location_name) {
+        this.location_name = location_name;
     }
 
     public int getSurvey_id() {
