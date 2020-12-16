@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+</head>
+<body>
+<section class="box">
+    <p th:text="'Hi ' + ${session.firstname} +' '+${session.lastname} " th:unless="${session == null}"></p>
+    <a href="createSurvey"><h4>Create a new survey</h4></a>
+    <a th:href="@{/allSurvey}"><h4>Show all the survey</h4></a>
+    <a th:href="@{/mySurvey}"><h4>Show my survey</h4></a>
+    <a th:href="@{/allUser}"><h4>Manage Users</h4></a>
+    <a href="logoutPage"><h4>Logout</h4></a>
+</section>
+</body>
+<style>
+body{
+margin: 0;
+padding: 0;
+font-family: sans-serif;
+background: rgb(45, 176, 194);
+}
+.box{
+width: 300px;
+padding: 100px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: rgb(24, 28, 28);
+text-align: center;
+border-radius: 15px;
+}
+.box p{
+color: white;
+text-transform: uppercase;
+font-family: sans-serif;
+font-weight: 600;
+font-size: 35px;
+}
+
+.box a{
+margin-top: 5px;
+text-align: center;
+font-size: 14px;
+color: white;
+}
+</style>
+</html>
