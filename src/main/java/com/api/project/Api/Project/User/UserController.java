@@ -109,7 +109,7 @@ public class UserController
     @RequestMapping(value = { "/allUser" }, method = RequestMethod.GET)
     public ModelAndView showSurvey(HttpSession session)
     {
-        if(session.getAttribute("user_id")=="1"){
+        if(session.getAttribute("user_id").equals(1)){
             ModelAndView allSurveyView=new ModelAndView("allUser");
             List<User> allUser = urepo.getAllUser();
             allSurveyView.addObject("allUser", allUser);
