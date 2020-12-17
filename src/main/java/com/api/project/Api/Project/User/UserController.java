@@ -1,5 +1,6 @@
 package com.api.project.Api.Project.User;
 
+import com.api.project.Api.Project.Survey.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,9 @@ public class UserController
 {
     @Autowired
     UserRepository urepo;
+
+    @Autowired
+    SurveyRepository srepo;
 
     @RequestMapping("/")
     public String home()
@@ -120,6 +124,17 @@ public class UserController
             error.addObject("message","You have not the rights to access this page");
             return error;
         }
+    }
+
+    @RequestMapping(value = { "/allUser" }, method = RequestMethod.POST)
+    public ModelAndView deleteMySurvey(@RequestParam ("user_id") String id, HttpSession session) {
+        int user_id = Integer.parseInt(id);
+        if(user_id!=1){ // 1 correspond to the user_id of the super user (admin) in our project so we can't delete that user.
+            User user = urepo.findById(user_id).orElseThrow(() -> new IllegalArgumentException("Invalid survey Id:" + id));
+            srepo.deleteAllSurveyOfUser(user_id);
+            urepo.delete(user);
+        }
+        return new ModelAndView("redirect:/allUser");
     }
 
 }

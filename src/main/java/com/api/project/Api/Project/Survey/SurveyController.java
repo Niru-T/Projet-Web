@@ -3,10 +3,7 @@ package com.api.project.Api.Project.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -71,5 +68,12 @@ public class SurveyController {
         List<Survey> mySurvey = srepo.getUserSurvey(Integer.parseInt(session.getAttribute("user_id").toString()));
         mySurveyView.addObject("mySurvey", mySurvey);
         return mySurveyView;
+    }
+
+    @RequestMapping(value = { "/mySurvey" }, method = RequestMethod.POST)
+    public ModelAndView deleteMySurvey(@RequestParam ("survey_id") String id, HttpSession session) {
+        Survey survey = srepo.findById(Integer.parseInt(id)).orElseThrow(() -> new IllegalArgumentException("Invalid survey Id:" + id));
+        srepo.delete(survey);
+        return new ModelAndView("redirect:/mySurvey");
     }
 }
