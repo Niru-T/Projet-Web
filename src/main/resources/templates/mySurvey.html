@@ -14,6 +14,12 @@
     <tr th:each ="mySurveys : ${mySurvey}">
         <td th:utext="${mySurveys.date_proposed}">...</td>
         <td th:utext="${mySurveys.location_name}">...</td>
+        <td>
+            <form method="post" th:action="@{/mySurvey}" >
+                <input type="hidden" name="survey_id" th:value="${mySurveys.survey_id}"/>
+                <button type="submit" name="submit" >DELETE</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

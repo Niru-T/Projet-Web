@@ -7,17 +7,21 @@
 <body>
 <table class="table">
     <thead>
-    <th>User id</th>
     <th>Username</th>
     <th>First name</th>
     <th>Last name</th>
     </thead>
     <tbody>
     <tr th:each ="allUsers : ${allUser}">
-        <td th:utext="${allUsers.user_id}">...</td>
         <td th:utext="${allUsers.user_email}">...</td>
         <td th:utext="${allUsers.user_fname}">...</td>
         <td th:utext="${allUsers.user_lname}">...</td>
+        <td>
+            <form method="post" th:action="@{/allUser}" >
+                <input type="hidden" name="user_id" th:value="${allUsers.user_id}"/>
+                <button type="submit" name="submit" >DELETE</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
