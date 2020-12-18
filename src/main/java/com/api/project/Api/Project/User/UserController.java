@@ -60,7 +60,7 @@ public class UserController
     }
 
     @PostMapping("/signup")
-    public ModelAndView addUser(@RequestParam("user_email") String user_email, User user)
+    public ModelAndView register(@RequestParam("user_email") String user_email, User user)
     {
         ModelAndView success=new ModelAndView("success");
         ModelAndView echec=new ModelAndView("problem");
@@ -113,16 +113,21 @@ public class UserController
     @RequestMapping(value = { "/allUser" }, method = RequestMethod.GET)
     public ModelAndView showSurvey(HttpSession session)
     {
-        if(session.getAttribute("user_id").equals(1)){
-            ModelAndView allSurveyView=new ModelAndView("allUser");
-            List<User> allUser = urepo.getAllUser();
-            allSurveyView.addObject("allUser", allUser);
-            return allSurveyView;
-        }
-        else{
-            ModelAndView error = new ModelAndView("accesDenied");
-            error.addObject("message","You have not the rights to access this page");
-            return error;
+        if(session.getAttribute("user_id")!=null) {
+            if (session.getAttribute("user_id").equals(1)) {
+                ModelAndView allSurveyView = new ModelAndView("allUser");
+                List<User> allUser = urepo.getAllUser();
+                allSurveyView.addObject("allUser", allUser);
+                return allSurveyView;
+            } else {
+                ModelAndView error = new ModelAndView("accesDenied");
+                error.addObject("message", "You have not the rights to access this page");
+                return error;
+            }
+        } else{
+                ModelAndView error = new ModelAndView("problem");
+                error.addObject("message","Please login or register first");
+                return error;
         }
     }
 

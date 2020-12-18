@@ -53,25 +53,40 @@ public class SurveyController {
     }
 
     @RequestMapping(value = { "/allSurvey" }, method = RequestMethod.GET)
-    public ModelAndView showSurvey()
+    public ModelAndView showSurvey(HttpSession session)
     {
-        ModelAndView allSurveyView=new ModelAndView("allSurvey");
-        List<Survey> allSurvey = srepo.getAllSurvey();
-        allSurveyView.addObject("allSurvey", allSurvey);
-        return allSurveyView;
+        if(session.getAttribute("user_id")!=null){
+            ModelAndView allSurveyView=new ModelAndView("allSurvey");
+            List<Survey> allSurvey = srepo.getAllSurvey();
+            allSurveyView.addObject("allSurvey", allSurvey);
+            return allSurveyView;
+        }
+        else{
+            ModelAndView error = new ModelAndView("problem");
+            error.addObject("message","Please login or register first");
+            return error;
+        }
     }
 
     @RequestMapping(value = { "/mySurvey" }, method = RequestMethod.GET)
     public ModelAndView showLoggedUserSurvey(HttpSession session)
     {
-        ModelAndView mySurveyView=new ModelAndView("mySurvey");
-        List<Survey> mySurvey = srepo.getUserSurvey(Integer.parseInt(session.getAttribute("user_id").toString()));
-        mySurveyView.addObject("mySurvey", mySurvey);
-        return mySurveyView;
+        if(session.getAttribute("user_id")!=null){
+            ModelAndView mySurveyView=new ModelAndView("mySurvey");
+            List<Survey> mySurvey = srepo.getUserSurvey(Integer.parseInt(session.getAttribute("user_id").toString()));
+            mySurveyView.addObject("mySurvey", mySurvey);
+            return mySurveyView;
+        }
+        else{
+            ModelAndView error = new ModelAndView("problem");
+            error.addObject("message","Please login or register first");
+            return error;
+        }
+
     }
 
     @RequestMapping(value = { "/mySurvey" }, method = RequestMethod.POST)
-    public ModelAndView deleteMySurvey(@RequestParam ("survey_id") String id, HttpSession session) {
+    public ModelAndView deleteMySurvey(@RequestParam ("survey_id") String id) {
         Survey survey = srepo.findById(Integer.parseInt(id)).orElseThrow(() -> new IllegalArgumentException("Invalid survey Id:" + id));
         srepo.delete(survey);
         return new ModelAndView("redirect:/mySurvey");
