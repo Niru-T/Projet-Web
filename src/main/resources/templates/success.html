@@ -7,8 +7,8 @@
 <body>
 <section>
     <p th:text="${message}"></p>
-    <a href="/"><h4>Go to home page</h4></a>
-    <a href="loginPage"><h4>Login</h4></a>
+    <a href="/">Go to home page</a>
+    <a href="loginPage">Login</a>
 </section>
 </body>
 <style>
@@ -36,12 +36,20 @@ font-family: sans-serif;
 font-weight: 600;
 font-size: 35px;
 }
+a:link, a:visited {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 5px 5px;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
 
-.box a{
-margin-top: 5px;
-text-align: center;
-font-size: 14px;
-color: white;
+a:hover, a:active {
+  background-color: black;
+  color: white;
 }
 </style>
 </html>
