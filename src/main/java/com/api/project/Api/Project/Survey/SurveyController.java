@@ -52,22 +52,6 @@ public class SurveyController {
         return success;
     }
 
-    @RequestMapping(value = { "/allSurvey" }, method = RequestMethod.GET)
-    public ModelAndView showSurvey(HttpSession session)
-    {
-        if(session.getAttribute("user_id")!=null){
-            ModelAndView allSurveyView=new ModelAndView("allSurvey");
-            List<Survey> allSurvey = srepo.getAllSurvey();
-            allSurveyView.addObject("allSurvey", allSurvey);
-            return allSurveyView;
-        }
-        else{
-            ModelAndView error = new ModelAndView("problem");
-            error.addObject("message","Please login or register first");
-            return error;
-        }
-    }
-
     @RequestMapping(value = { "/mySurvey" }, method = RequestMethod.GET)
     public ModelAndView showLoggedUserSurvey(HttpSession session)
     {
